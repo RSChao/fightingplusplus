@@ -26,6 +26,7 @@ import com.rschao.plugins.fightingpp.Plugin;
 import com.rschao.plugins.fightingpp.events.awakening;
 import com.rschao.plugins.fightingpp.events.events;
 import com.rschao.plugins.techapi.tech.Technique;
+import com.rschao.plugins.techapi.tech.cooldown.CooldownManager;
 import com.rschao.plugins.techapi.tech.cooldown.cooldownHelper;
 import com.rschao.plugins.techapi.tech.feedback.hotbarMessage;
 import com.rschao.plugins.techapi.tech.register.TechRegistry;
@@ -51,18 +52,30 @@ public class chao {
     }
 
 
-
-    static Technique food = new Technique("food", "Abundance of Food", false, 120000, (player, fruit, code) -> {
+    static Technique notch = new Technique("notch", "Free Notch", false, 180000, (player, fruit, code) -> {
+        player.getInventory().addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 32));
+        hotbarMessage.sendHotbarMessage(player, ChatColor.DARK_PURPLE + "You have used the Free Notch technique");
+    });
+    static Technique food = new Technique("food", "Abundance of Food", false, 60000, (player, fruit, code) -> {
         String playerName = player.getName();
         int rng = com.rschao.events.events.getRNG(0, 100);
         if (player.isSneaking()) {
             if (awakening.isFruitAwakened(playerName, fruitId)) {
                 player.getInventory().addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 32));
                 hotbarMessage.sendHotbarMessage(player, ChatColor.DARK_PURPLE + "You have used the Free Notch technique");
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    CooldownManager.setCooldown(player, "food", 180000);
+                }, 2);
+                return;
             } else {
                 if (rng < 30) {
                     player.getInventory().addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 32));
                     hotbarMessage.sendHotbarMessage(player, ChatColor.DARK_PURPLE + "You have used the Free Notch technique");
+                    CooldownManager.setCooldown(player, "food", 180000);
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        CooldownManager.setCooldown(player, "food", 180000);
+                    }, 2);
+                    return;
                 } else {
                     player.getInventory().addItem(new ItemStack(Material.GOLDEN_CARROT, 64));
                     hotbarMessage.sendHotbarMessage(player, ChatColor.YELLOW + "You have used the Abundance of food technique");
