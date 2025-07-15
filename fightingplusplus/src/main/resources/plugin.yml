@@ -1,0 +1,27 @@
+name: fightingplusplus
+main: com.rschao.plugins.fightingpp.Plugin
+version: 1.0
+api-version: 1.21
+authors:
+  - RSChao
+contributors: 
+  - D3lta7
+permissions:
+  fruits.give:
+    description: Gives access to give fruits
+    default: op
+  fightingplusplus.removefruit:
+    description: Allows the player to remove a fruit
+    default: op
+  fruits.cooldown:
+    description: Allows the player to bypass the cooldown
+    default: op
+  fruits.second:
+    description: Allows the player to bear a second fruit
+    default: op
+
+depend:
+  - bossfight
+  - ShowdownSMP
+  - CommandAPI
+  - techapi
