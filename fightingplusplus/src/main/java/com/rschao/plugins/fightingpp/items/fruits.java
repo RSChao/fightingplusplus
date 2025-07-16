@@ -42,9 +42,9 @@ public class fruits {
         fruitStealer = stealerItem();
         fireFruit = DevilFruit.makeFruit("Mera Mera", new NamespacedKey("fruit", "fire"), 1);
         fabriFruit = DevilFruit.makeFruit("Fabri Fabri", new NamespacedKey("fruit", "fabri"), 3);
-        deltaFrutita = DevilFruit.makeFruit("Deruta Deruta", new NamespacedKey("fruit", "delta"), 60);
+        deltaFrutita = DevilFruit.makeFruit("Deruta Deruta", new NamespacedKey("fruit", "delta"), 4);
         darioFruit = DevilFruit.makeFruit("Supeedo Supeedo", new NamespacedKey("fruit", "dario"), 3);
-        chaoFruit = DevilFruit.makeFruit("Katate Kami", new NamespacedKey("fruit", "chao"), 60);
+        chaoFruit = DevilFruit.makeFruit("Katate Kami", new NamespacedKey("fruit", "chao"), 4);
         luffyFruit = DevilFruit.makeFruit("Gomu Gomu", new NamespacedKey("fruit", "gomu"), 0);
         airFruit = DevilFruit.makeFruit("Kaze Kaze", new NamespacedKey("fruit", "air"), 1);
         iceFruit = DevilFruit.makeFruit("Hie hie", new NamespacedKey("fruit", "ice"), 1);
@@ -55,8 +55,8 @@ public class fruits {
         paperFruit = DevilFruit.makeFruit("Kami Kami", new NamespacedKey("fruit", "paper"), 2);
         chocoFruit = DevilFruit.makeFruit("Choko Choko", new NamespacedKey("fruit", "choco"), 3);
         tickleFruit = DevilFruit.makeFruit("Tikoru Tikoru", new NamespacedKey("fruit", "tickle"), 0);
-        flyFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "fly"), 60);
-        dndFruit = DevilFruit.makeFruit("D&D", "Dice", new NamespacedKey("fruit", "dnd_dice"), 60);
+        flyFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "fly"), 4);
+        dndFruit = DevilFruit.makeFruit("D&D", "Dice", new NamespacedKey("fruit", "dnd_dice"), 4);
         thegenothing = geno();
 
 
