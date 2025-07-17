@@ -64,7 +64,7 @@ public class fruits {
         ganonFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "ganon"), 2);
         jevilFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "jevil"), 2);
         flowerFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "flower"), 60);
-        toñoFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "toño"), 69);
+        toñoFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "tono"), 69);
         thegenothing = geno();
 
 
