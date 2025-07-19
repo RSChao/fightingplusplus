@@ -5,10 +5,10 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ShulkerBullet;
 import org.bukkit.entity.WindCharge;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -26,6 +26,10 @@ import com.rschao.plugins.techapi.tech.feedback.hotbarMessage;
 import com.rschao.plugins.techapi.tech.register.TechRegistry;
 
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 public class delta {
     static final String fruitId = "delta";
@@ -116,11 +120,11 @@ public class delta {
         hotbarMessage.sendHotbarMessage(player, ChatColor.DARK_PURPLE + "You have used the Conqueror's Haki technique");
     });
     static Technique zoltraakBarrage = new Technique("zoltraak", "Zoltraak", false, cooldownHelper.minutesToMiliseconds(2), (player, fruit, code) -> {
-        final int beams = 12; // Number of beams in the circle
-        final double radius = 10.0; // Distance from player to spawn beams
-        final double beamRange = 40.0;
-        final double beamStep = 0.5;
-        final double beamDamage = 20.0;
+        final int beams = 12; // Number of projectiles in the circle
+        final double radius = 10.0; // Distance from player to spawn projectiles
+        final double projectileSpeed = 2.5; // Higher than normal shulker bullet speed
+        final double projectileDamage = 50.0; // Custom damage for each projectile
+        final String metaKey = "zoltraak_bullet";
         final World world = player.getWorld();
         final Location playerLoc = player.getLocation().clone();
         final Player target = chao.getClosestPlayer(playerLoc);
@@ -135,64 +139,42 @@ public class delta {
             double z = radius * Math.sin(angle);
             Location spawnLoc = playerLoc.clone().add(x, 1.5, z);
 
-            // Calculate initial direction to target
+            // Spawn shulker bullet and set its velocity toward the target
+            ShulkerBullet bullet = world.spawn(spawnLoc, ShulkerBullet.class, b -> {
+                b.setShooter(player);
+                b.setTarget(target);
+            });
+
+            // Mark bullet for custom damage
+            bullet.setMetadata(metaKey, new FixedMetadataValue(plugin, projectileDamage));
+
+            // Manually set velocity for faster travel
             Vector toTarget = target.getLocation().add(0, 1, 0).toVector().subtract(spawnLoc.toVector()).normalize();
-
-            // Each beam runs in its own task for smooth "turning"
-            new BukkitRunnable() {
-                boolean turned = false;
-                Vector direction = toTarget.clone();
-                Location current = spawnLoc.clone();
-                int steps = 0;
-                @Override
-                public void run() {
-                    if (steps++ > beamRange / beamStep) {
-                        this.cancel();
-                        return;
-                    }
-                    // Draw the beam
-                    world.spawnParticle(Particle.END_ROD, current, 1, 0, 0, 0, 0);
-
-                    // Damage entities in path (players only, except shooter)
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        if (p == player) continue;
-                        if (p.getWorld() != world) continue;
-                        if (p.getLocation().add(0, 1, 0).distance(current) < 1.2) {
-                            p.damage(beamDamage, player);
-                        }
-                    }
-
-                    if (current.getBlock().getType().isSolid()) {
-                        // Small explosion (no fire, no block damage)
-                        world.createExplosion(current, 2.0f, false, false, player);
-                        this.cancel();
-                        return;
-                    }
-
-                    // If not turned yet, check if target has dodged enough to trigger a turn
-                    if (!turned) {
-                        Vector newToTarget = target.getLocation().add(0, 1, 0).toVector().subtract(current.toVector()).normalize();
-                        double angleBetween = direction.angle(newToTarget);
-                        if (angleBetween > Math.toRadians(10)) { // If target moved enough
-                            // 50% chance to turn (otherwise, beam misses)
-                            if (Math.random() < 0.5) {
-                                // Turn smoothly up to 90º
-                                double maxTurn = Math.toRadians(90);
-                                double turnAngle = Math.min(angleBetween, maxTurn);
-                                Vector axis = direction.clone().crossProduct(newToTarget).normalize();
-                                direction = direction.clone().rotateAroundAxis(axis, turnAngle).normalize();
-                            }
-                            turned = true;
-                        }
-                    }
-
-                    // Move beam forward
-                    current.add(direction.clone().multiply(beamStep));
-                }
-            }.runTaskTimer(plugin, i * 2, 1L); // Stagger beams for effect
+            bullet.setVelocity(toTarget.multiply(projectileSpeed));
         }
 
-        hotbarMessage.sendHotbarMessage(player, ChatColor.AQUA + "Zoltraak Barrage unleashed!");
+        // Remove levitation effect on impact (event-based, but here is a quick workaround)
+        Bukkit.getPluginManager().registerEvents(new Listener() {
+            @EventHandler
+            public void onPotionEffect(org.bukkit.event.entity.EntityPotionEffectEvent event) {
+                if (event.getEntity() instanceof Player && event.getNewEffect() != null
+                        && event.getNewEffect().getType().equals(PotionEffectType.LEVITATION)) {
+                    event.setCancelled(true);
+                }
+            }
+            @EventHandler
+            public void onShulkerBulletDamage(EntityDamageByEntityEvent event) {
+                if (event.getDamager() instanceof ShulkerBullet) {
+                    ShulkerBullet bullet = (ShulkerBullet) event.getDamager();
+                    if (bullet.hasMetadata(metaKey)) {
+                        double dmg = bullet.getMetadata(metaKey).get(0).asDouble();
+                        event.setDamage(dmg);
+                    }
+                }
+            }
+        }, plugin);
+
+        hotbarMessage.sendHotbarMessage(player, ChatColor.AQUA + "Zoltraak unleashed!");
     });
     static Technique wrathOfElementalGod = new Technique("wrath_of_elemental_god", "Wrath of the Elemental God", true, cooldownHelper.secondsToMiliseconds(3600), (player, fruit, code) -> {
         if (!awakening.isFruitAwakened(player.getName(), fruitId)) {
@@ -247,7 +229,7 @@ public class delta {
                     this.cancel();
                     return;
                 }
-                double angleStep = 2 * Math.PI / numPlayers;
+                double angleStep = 2 * Math.PI / Math.max(1, numPlayers);
                 for (int i = 0; i < targets.size(); i++) {
                     Player p = targets.get(i);
                     double angle = angleStep * i + spiralTurns * 2 * Math.PI * tick / spiralDuration;
