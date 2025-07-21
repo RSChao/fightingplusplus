@@ -324,6 +324,7 @@ public class events implements Listener {
             playerName = playerName.substring(1);
         }
         if(e.getEntity().getKiller() == null) return;
+        if(e.getEntity().getKiller().getInventory().getItem(9) == null) return; // Check if the killer has an item in their offhand
         Player killer = e.getEntity().getKiller();
         if(!killer.getInventory().getItem(9).isSimilar(fruits.fruitStealer)) return; // Check if the killer has a fruit in their offhand
         if (checkEaten(playerName)) {

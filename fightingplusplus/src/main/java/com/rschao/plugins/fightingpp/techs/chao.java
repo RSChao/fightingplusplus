@@ -52,10 +52,6 @@ public class chao {
     }
 
 
-    static Technique notch = new Technique("notch", "Free Notch", false, 180000, (player, fruit, code) -> {
-        player.getInventory().addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 32));
-        hotbarMessage.sendHotbarMessage(player, ChatColor.DARK_PURPLE + "You have used the Free Notch technique");
-    });
     static Technique food = new Technique("food", "Abundance of Food", false, 60000, (player, fruit, code) -> {
         String playerName = player.getName();
         int rng = com.rschao.events.events.getRNG(0, 100);
@@ -109,7 +105,7 @@ public class chao {
         ItemStack[] armorContents = player.getInventory().getArmorContents();
                         if(awakening.isFruitAwakened(playerName, fruitId)){
                             for (ItemStack item : armorContents) {
-                                if (item != null && item.getItemMeta() instanceof Damageable) {
+                                if (item != null && item.getItemMeta() instanceof Damageable && item.getDurability() < item.getType().getMaxDurability()) {
                                     Damageable meta = (Damageable) item.getItemMeta();
                                     meta.setDamage(0); // Set durability to maximum
                                     item.setItemMeta(meta);
@@ -119,7 +115,7 @@ public class chao {
                         }
 
                         for (ItemStack item : armorContents) {
-                            if (item != null && item.getItemMeta() instanceof Damageable) {
+                            if (item != null && item.getItemMeta() instanceof Damageable && item.getDurability() < item.getType().getMaxDurability()) {
                                 Damageable meta = (Damageable) item.getItemMeta();
                                 meta.setDamage(0); // Set durability to maximum
                                 item.setItemMeta(meta);

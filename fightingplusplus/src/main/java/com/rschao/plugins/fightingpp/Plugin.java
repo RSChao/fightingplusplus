@@ -2,6 +2,7 @@ package com.rschao.plugins.fightingpp;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.rschao.plugins.fightingpp.commands.catalyst;
@@ -23,6 +24,7 @@ import com.rschao.plugins.fightingpp.techs.delta;
 import com.rschao.plugins.fightingpp.techs.fabri;
 import com.rschao.plugins.fightingpp.techs.fire;
 import com.rschao.plugins.fightingpp.techs.fly;
+import com.rschao.plugins.fightingpp.techs.ganon;
 import com.rschao.plugins.fightingpp.techs.gomu;
 import com.rschao.plugins.fightingpp.techs.ice;
 import com.rschao.plugins.fightingpp.techs.light;
@@ -55,7 +57,11 @@ public class Plugin extends JavaPlugin
     removeFruit.deleteFruit().register();
     catalyst.Load().register();
     eventitems.Load().register();
+    Bukkit.getScheduler().scheduleSyncDelayedTask(this, ()->{
+      Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist off");
+    });
   }
+
 
   public void onDisable(){
     LOGGER.info("fightingplusplus disabled");
@@ -78,6 +84,7 @@ public class Plugin extends JavaPlugin
     fly.Register();
     paper.Register();
     choco.Register();
+    ganon.register();
     // Add more tech registrations as needed
   }
 }
