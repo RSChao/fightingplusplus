@@ -1,7 +1,7 @@
 name: fightingplusplus
 main: com.rschao.plugins.fightingpp.Plugin
 version: 1.0
-api-version: 1.21
+api-version: 1.21.4
 authors:
   - RSChao
 contributors: 
