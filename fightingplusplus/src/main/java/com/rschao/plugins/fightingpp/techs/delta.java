@@ -111,9 +111,9 @@ public class delta {
                 target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 5 * 20, 255));
                 target.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 5 * 20, 255));
                 target.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 5 * 20, 255));
-                target.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0);
+                target.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(0);
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    target.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(jumpstrength);
+                    target.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jumpstrength);
                 }, 5 * 20);
             }
         }

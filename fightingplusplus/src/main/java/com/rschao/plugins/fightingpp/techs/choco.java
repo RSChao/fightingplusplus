@@ -113,10 +113,10 @@ public class choco {
                     target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 5 * 20, 255));
                     target.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 5 * 20, 255));
                     target.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 5 * 20, 255));
-                    target.getAttribute(org.bukkit.attribute.Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0);
+                    target.getAttribute(org.bukkit.attribute.Attribute.JUMP_STRENGTH).setBaseValue(0);
                     double jumpstrength = 0.41999998697815;
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                        target.getAttribute(org.bukkit.attribute.Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(jumpstrength);
+                        target.getAttribute(org.bukkit.attribute.Attribute.JUMP_STRENGTH).setBaseValue(jumpstrength);
                         target.damage(dmg);
                     }, 5 * 20);
                 }

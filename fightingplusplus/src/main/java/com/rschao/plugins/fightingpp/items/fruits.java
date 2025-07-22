@@ -137,7 +137,7 @@ public class fruits {
         meta.setRarity(ItemRarity.EPIC);
         meta.setItemName(ChatColor.DARK_RED + "Genocidal knife");
         meta.setEnchantmentGlintOverride(true);
-        meta.setCustomModelData(5);
+        meta.setItemModel(NamespacedKey.minecraft("geno_knife"));
         meta.getPersistentDataContainer().set(new NamespacedKey("event", "geno"), PersistentDataType.BOOLEAN, true);
         item.setItemMeta(meta);
         return item;

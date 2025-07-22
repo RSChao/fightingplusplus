@@ -31,9 +31,9 @@ public class dario {
 
     static Technique swiftAttack = new Technique("swift_attack", "Swift Attack", false, cooldownHelper.secondsToMiliseconds(300), (player, fruit, code) -> {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(999);
+            player.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(999);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
+                player.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
             }, 60 * 20);
         }, 2);
         hotbarMessage.sendHotbarMessage(player, ChatColor.AQUA + "You have used the Swift Attack technique");

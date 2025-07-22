@@ -20,20 +20,20 @@ public class gomu {
         String playerName = player.getName();
         if (awakening.isFruitAwakened(playerName, fruitId)) {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).setBaseValue(20);
-                player.getAttribute(Attribute.PLAYER_ENTITY_INTERACTION_RANGE).setBaseValue(20);
+                player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE).setBaseValue(20);
+                player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(20);
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).setBaseValue(4.5);
-                    player.getAttribute(Attribute.PLAYER_ENTITY_INTERACTION_RANGE).setBaseValue(3);
+                    player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE).setBaseValue(4.5);
+                    player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(3);
                 }, 60 * 20);
             }, 2);
         } else {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).setBaseValue(9);
-                player.getAttribute(Attribute.PLAYER_ENTITY_INTERACTION_RANGE).setBaseValue(9);
+                player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE).setBaseValue(9);
+                player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(9);
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).setBaseValue(4.5);
-                    player.getAttribute(Attribute.PLAYER_ENTITY_INTERACTION_RANGE).setBaseValue(3);
+                    player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE).setBaseValue(4.5);
+                    player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(3);
                 }, 60 * 20);
             }, 2);
         }

@@ -25,17 +25,17 @@ public class dnd_dice {
         int dice = com.rschao.events.events.getRNG(0, 20);
         if (dice == 1) {
             // Remove 10 hearts from the player's max health
-            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(
-                player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() - 10
+            player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(
+                player.getAttribute(Attribute.MAX_HEALTH).getBaseValue() - 10
             );
             // Add glitch effect - no jumping, slowness, weakness, blindness 255 - for a minute
             player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 5 * 20, 255));
             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 5 * 20, 255));
             player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 5 * 20, 255));
             double jumpstrength = 0.41999998697815;
-            player.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0);
+            player.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(0);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                player.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(jumpstrength);
+                player.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(jumpstrength);
             }, 60 * 20);
             // Add glowing effect for 10 minutes
             player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 10 * 60 * 20, 255));

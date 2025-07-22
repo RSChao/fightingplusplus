@@ -169,23 +169,23 @@ public class extraEvents implements Listener {
                                 double distance = p.getLocation().distance(player.getLocation());
                                 if (p != player) {
                                     Bukkit.getScheduler().runTaskLater(Plugin.getPlugin(Plugin.class), () -> {
-                                        double jumpstrength = player.getAttribute(Attribute.GENERIC_JUMP_STRENGTH)
+                                        double jumpstrength = player.getAttribute(Attribute.JUMP_STRENGTH)
                                                 .getBaseValue();
-                                        double hearts = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+                                        double hearts = p.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
                                         if (distance <= 5) {
 
                                             p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 5 * 20, 255));
                                             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 5 * 20, 255));
                                             Bukkit.getScheduler().runTaskLater(Plugin.getPlugin(Plugin.class), () -> {
-                                                player.getAttribute(Attribute.GENERIC_JUMP_STRENGTH)
+                                                player.getAttribute(Attribute.JUMP_STRENGTH)
                                                         .setBaseValue(jumpstrength);
                                             }, 5 * 20);
                                         }
                                         if (distance <= 7) {
 
-                                            p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(hearts - 20);
+                                            p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(hearts - 20);
                                             Bukkit.getScheduler().runTaskLater(Plugin.getPlugin(Plugin.class), () -> {
-                                                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(hearts);
+                                                p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(hearts);
                                             }, 60 * 20);
                                         }
 
@@ -195,10 +195,10 @@ public class extraEvents implements Listener {
                                     player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 5 * 20, 5));
                                     player.damage(50);
                                     com.rschao.smp.lives.lifeAPI.SubtractLife(player);
-                                    double hearts = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-                                    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(hearts - 10);
+                                    double hearts = p.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
+                                    p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(hearts - 10);
                                     Bukkit.getScheduler().runTaskLater(Plugin.getPlugin(Plugin.class), () -> {
-                                        p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(hearts);
+                                        p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(hearts);
                                     }, 60 * 20);
                                 }
                             }
