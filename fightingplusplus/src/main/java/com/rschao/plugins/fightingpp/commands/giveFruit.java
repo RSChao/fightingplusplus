@@ -1,26 +1,56 @@
 package com.rschao.plugins.fightingpp.commands;
 
 import com.rschao.plugins.fightingpp.items.fruits;
-
 import dev.jorel.commandapi.CommandAPICommand;
 
 public class giveFruit {
     public static CommandAPICommand givefruit(){
-        CommandAPICommand cmd = new CommandAPICommand("givefruit")
+        return new CommandAPICommand("givefruit")
         .withPermission("fruits.give")
-        .withSubcommands(fire(), fabri(), delta(), dario(), chao(), luffy(), wakeup(), air(), ice(), light(), dark(), peru(), paper(), choco(), fly(), ticles())
+        .withSubcommands(fire(), fabri(), toño(), delta(), dario(), chao(), luffy(), wakeup(), air(), ice(), light(), dark(), peru(), paper(), choco(), fly(), ticles(), jevil(), flowah(), ganon())
         .executes((exec, args) ->{
-            
+
         });
-        return cmd;
 
     }
     public static CommandAPICommand fire(){
         CommandAPICommand cmd = new CommandAPICommand("MeraMera")
-        .withPermission("fruits.give")
-        .executesPlayer((exec, args) ->{
-            exec.getInventory().addItem(fruits.fireFruit);
-        });
+                .withPermission("fruits.give")
+                .executesPlayer((exec, args) ->{
+                    exec.getInventory().addItem(fruits.fireFruit);
+                });
+        return cmd;
+    }
+    public static CommandAPICommand toño(){
+        CommandAPICommand cmd = new CommandAPICommand("ToñoToño")
+                .withPermission("fruits.give")
+                .executesPlayer((exec, args) ->{
+                    exec.getInventory().addItem(fruits.toñoFruit);
+                });
+        return cmd;
+    }
+    public static CommandAPICommand flowah(){
+        CommandAPICommand cmd = new CommandAPICommand("HanaHana")
+                .withPermission("fruits.give")
+                .executesPlayer((exec, args) ->{
+                    exec.getInventory().addItem(fruits.flowerFruit);
+                });
+        return cmd;
+    }
+    public static CommandAPICommand ganon(){
+        CommandAPICommand cmd = new CommandAPICommand("GanonGanon")
+                .withPermission("fruits.give")
+                .executesPlayer((exec, args) ->{
+                    exec.getInventory().addItem(fruits.ganonFruit);
+                });
+        return cmd;
+    }
+    public static CommandAPICommand jevil(){
+        CommandAPICommand cmd = new CommandAPICommand("JevilJevil")
+                .withPermission("fruits.give")
+                .executesPlayer((exec, args) ->{
+                    exec.getInventory().addItem(fruits.jevilFruit);
+                });
         return cmd;
     }
     public static CommandAPICommand fly(){

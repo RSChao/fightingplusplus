@@ -26,6 +26,7 @@ public class paper {
         TechRegistry.registerTechnique(fruitId, paperArmor);
         TechRegistry.registerTechnique(fruitId, paperBlade);
         TechRegistry.registerTechnique(fruitId, mayhemOfPaper);
+        Plugin.registerFruitID(fruitId);
     }
 
     static Technique paperSpawn = new Technique("paper_spawn", "Paper Spawn", false, cooldownHelper.secondsToMiliseconds(60), (player, fruit, code) -> {

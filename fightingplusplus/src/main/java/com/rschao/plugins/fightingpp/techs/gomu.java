@@ -14,6 +14,7 @@ public class gomu {
 
     public static void Register() {
         TechRegistry.registerTechnique(fruitId, gomuNoMi);
+        Plugin.registerFruitID(fruitId);
     }
 
     static Technique gomuNoMi = new Technique("gomu_no_mi", "Gomu no mi", false, 33000, (player, fruit, code) -> {

@@ -1,22 +1,6 @@
 package com.rschao.plugins.fightingpp.techs;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.ShulkerBullet;
-import org.bukkit.entity.WindCharge;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
-
+import com.rschao.boss_battle.bossEvents;
 import com.rschao.plugins.fightingpp.Plugin;
 import com.rschao.plugins.fightingpp.events.awakening;
 import com.rschao.plugins.fightingpp.events.events;
@@ -24,18 +8,34 @@ import com.rschao.plugins.techapi.tech.Technique;
 import com.rschao.plugins.techapi.tech.cooldown.cooldownHelper;
 import com.rschao.plugins.techapi.tech.feedback.hotbarMessage;
 import com.rschao.plugins.techapi.tech.register.TechRegistry;
-
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.ShulkerBullet;
+import org.bukkit.entity.WindCharge;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class delta {
     static final String fruitId = "delta";
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
+        Plugin.registerFruitID(fruitId);
         TechRegistry.registerTechnique(fruitId, windSword);
         TechRegistry.registerTechnique(fruitId, negate);
         TechRegistry.registerTechnique(fruitId, dragonOnslaught);
@@ -67,7 +67,7 @@ public class delta {
 
         for (org.bukkit.entity.Entity entity : location.getWorld().getEntities()) {
             if (entity.getLocation().distance(location) <= 20 && entity != player) {
-                if((entity instanceof Player)){
+                if ((entity instanceof Player)) {
                     Player target = (Player) entity;
                     target.damage(30);
                 }
@@ -127,7 +127,14 @@ public class delta {
         final String metaKey = "zoltraak_bullet";
         final World world = player.getWorld();
         final Location playerLoc = player.getLocation().clone();
-        final Player target = chao.getClosestPlayer(playerLoc);
+        Player boss = null;
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (bossEvents.bossActive && p.hasPermission("gaster.boss")) {
+                boss = p;
+                break;
+            }
+        }
+        final Player target = (bossEvents.bossActive) ? boss : chao.getClosestPlayer(playerLoc);
         if (target == null) {
             hotbarMessage.sendHotbarMessage(player, ChatColor.GRAY + "No target found for Zoltraak.");
             return;
@@ -162,6 +169,7 @@ public class delta {
                     event.setCancelled(true);
                 }
             }
+
             @EventHandler
             public void onShulkerBulletDamage(EntityDamageByEntityEvent event) {
                 if (event.getDamager() instanceof ShulkerBullet) {
@@ -187,9 +195,8 @@ public class delta {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 5 * 20, 5));
             for (int i = 0; i < 10; i++) {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    player.getWorld().createExplosion(
-                        player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(39)),
-                        12.0F, false, true);
+                    player.getWorld().createExplosion(player.getTargetBlockExact(50).getLocation(), 12.0F, false, true, player);
+                    player.setVelocity(new Vector(0, 0, 0));
                 }, 5L * i);
             }
         }, 10L);
@@ -205,9 +212,19 @@ public class delta {
 
         // 2. Gather players in 60-block radius
         Location center = user.getLocation().add(0, 3, 0);
-        List<Player> targets = user.getWorld().getPlayers().stream()
-            .filter(p -> !p.equals(user) && p.getLocation().distance(user.getLocation()) <= 60)
-            .collect(Collectors.toList());
+        List<Player> targets;
+        if (bossEvents.bossActive) {
+            // Solo jugadores con permiso gaster.boss
+            targets = user.getWorld().getPlayers().stream()
+                    .filter(p -> !p.equals(user) && p.getLocation().distance(user.getLocation()) <= 60)
+                    .filter(p -> p.hasPermission("gaster.boss"))
+                    .collect(Collectors.toList());
+        } else {
+            // Todos los jugadores en el radio, excepto el usuario
+            targets = user.getWorld().getPlayers().stream()
+                    .filter(p -> !p.equals(user) && p.getLocation().distance(user.getLocation()) <= 60)
+                    .collect(Collectors.toList());
+        }
 
         // 3. Teleport all to center (+3 up)
         for (Player p : targets) {
@@ -223,6 +240,7 @@ public class delta {
 
         new BukkitRunnable() {
             int tick = 0;
+
             @Override
             public void run() {
                 if (tick >= spiralDuration || targets.isEmpty()) {

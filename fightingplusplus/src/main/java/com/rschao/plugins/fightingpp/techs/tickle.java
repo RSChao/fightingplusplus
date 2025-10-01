@@ -24,6 +24,7 @@ public class tickle {
 
     public static void Register() {
         TechRegistry.registerTechnique(fruitId, tickleSpawner);
+        Plugin.registerFruitID(fruitId);
     }
 
     static Technique tickleSpawner = new Technique("tickle_spawner", "Tickle Spawner", false, cooldownHelper.secondsToMiliseconds(60), (player, fruit, code) -> {

@@ -27,6 +27,7 @@ public class fabri {
         TechRegistry.registerTechnique(fruitId, obsidianFarm);
         TechRegistry.registerTechnique(fruitId, armorHaki);
         TechRegistry.registerTechnique(fruitId, immolation);
+        Plugin.registerFruitID(fruitId);
     }
 
     static Technique freePearl = new Technique("free_pearl", "Free pearl", false, cooldownHelper.secondsToMiliseconds(60), (player, fruit, code) -> {

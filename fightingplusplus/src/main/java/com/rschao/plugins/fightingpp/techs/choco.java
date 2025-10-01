@@ -27,6 +27,7 @@ public class choco {
         TechRegistry.registerTechnique(fruitId, sweetArmor);
         TechRegistry.registerTechnique(fruitId, aceOfChocolate);
         TechRegistry.registerTechnique(fruitId, chocolateCircus);
+        Plugin.registerFruitID(fruitId);
     }
 
     static Technique makeMeSomeChoco = new Technique("make_me_some_choco", "Make me some Choco", false, cooldownHelper.secondsToMiliseconds(60), (player, fruit, code) -> {

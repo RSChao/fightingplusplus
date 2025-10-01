@@ -42,6 +42,7 @@ public class fruits {
     public static ItemStack toñoFruit;
     public static ItemStack thegenothing;
     public static ItemStack fruitStealer;
+    public static ItemStack fruitRemover;
     public static void Init(){
         fruitStealer = stealerItem();
         fireFruit = DevilFruit.makeFruit("Mera Mera", new NamespacedKey("fruit", "fire"), 1);
@@ -61,12 +62,12 @@ public class fruits {
         tickleFruit = DevilFruit.makeFruit("Tikoru Tikoru", new NamespacedKey("fruit", "tickle"), 0);
         flyFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "fly"), 60);
         dndFruit = DevilFruit.makeFruit("D&D", "Dice", new NamespacedKey("fruit", "dnd_dice"), 60);
-        ganonFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "ganon"), 2);
-        jevilFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "jevil"), 2);
-        flowerFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "flower"), 60);
-        toñoFruit = DevilFruit.makeFruit("Sora Sora", new NamespacedKey("fruit", "tono"), 69);
+        ganonFruit = DevilFruit.makeFruit("Ganon Ganon", new NamespacedKey("fruit", "ganon"), 2);
+        jevilFruit = DevilFruit.makeFruit("Jevil Jevil", new NamespacedKey("fruit", "jevil"), 2);
+        flowerFruit = DevilFruit.makeFruit("Hana Hana", new NamespacedKey("fruit", "flower"), 60);
+        toñoFruit = DevilFruit.makeFruit("Toño Toño", new NamespacedKey("fruit", "tono"), 69);
         thegenothing = geno();
-
+        fruitRemover = removerItem();
 
         ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey("fruit", "stealer"), fruitStealer);
         recipe.shape("BAB", "ACA", "BAB");
@@ -74,6 +75,11 @@ public class fruits {
         recipe.setIngredient('B', Material.END_PORTAL_FRAME);
         recipe.setIngredient('C', Material.COMMAND_BLOCK);
         Bukkit.addRecipe(recipe);
+        ShapedRecipe sr = new ShapedRecipe(new NamespacedKey("fruit", "remover"), fruitRemover);
+        sr.shape(" B ", "BAB", " B ");
+        sr.setIngredient('A', Material.HEART_OF_THE_SEA);
+        sr.setIngredient('B', new ExactChoice(getAllExistingFruits()));
+        Bukkit.addRecipe(sr);
     }
     public static List<ItemStack> getAllFruits() {
         List<ItemStack> list = new ArrayList<>();
@@ -92,14 +98,15 @@ public class fruits {
         list.add(chocoFruit);
         list.add(flyFruit);
         list.add(toñoFruit);
-        //list.add(tickleFruit);
-        //list.add(codeFruit);
-        //list.add(awaken);
+        list.add(flowerFruit);
+        list.add(ganonFruit);
+        list.add(jevilFruit);
         return list;
     }
     public static List<ItemStack> getAllExistingFruits() {
         List<ItemStack> list = getAllFruits();
         list.add(tickleFruit);
+        //list.add(dndFruit);
     
         return list;
     }
@@ -149,6 +156,16 @@ public class fruits {
         meta.setItemName("Devil Fruit Stealing Amulet");
         meta.setEnchantmentGlintOverride(true);
         meta.getPersistentDataContainer().set(new NamespacedKey("fruit", "thief"), PersistentDataType.BOOLEAN, true);
+        item.setItemMeta(meta);
+        return item;
+    }
+    static ItemStack removerItem(){
+        ItemStack item = new ItemStack(Material.HEART_OF_THE_SEA);
+        ItemMeta meta = item.getItemMeta();
+        meta.setRarity(ItemRarity.EPIC);
+        meta.setItemName("Devil Fruit Remover");
+        meta.setEnchantmentGlintOverride(true);
+        meta.getPersistentDataContainer().set(new NamespacedKey("fruit", "remove"), PersistentDataType.BOOLEAN, true);
         item.setItemMeta(meta);
         return item;
     }

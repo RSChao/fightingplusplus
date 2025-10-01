@@ -30,8 +30,11 @@ public class DevilFruit {
             case 3:
                 lore.add("Epic tier");
                 break;
-            case 4:
+            case 60:
                 lore.add("Sacred tier");
+                break;
+            case 69:
+                lore.add("Mean tier");
                 break;
             default:
                 lore.add("Unknown tier");

@@ -19,7 +19,6 @@ import net.md_5.bungee.api.ChatColor;
 
 public class air {
     static final String fruitId = "air";
-    static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
         TechRegistry.registerTechnique(fruitId, airball);

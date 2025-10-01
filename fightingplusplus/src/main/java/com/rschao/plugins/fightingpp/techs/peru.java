@@ -30,6 +30,7 @@ public class peru {
         TechRegistry.registerTechnique(fruitId, jumpGoBig);
         TechRegistry.registerTechnique(fruitId, dontBlowMeUp);
         TechRegistry.registerTechnique(fruitId, ultimateGlitch);
+        Plugin.registerFruitID(fruitId);
     }
 
     static Technique lilPoisonDarts = new Technique("lil_poison_darts", "Lil' poison darts", false, 180000, (player, fruit, code) -> {

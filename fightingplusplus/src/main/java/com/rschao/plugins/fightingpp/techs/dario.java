@@ -27,6 +27,7 @@ public class dario {
         TechRegistry.registerTechnique(fruitId, luckySpeed);
         TechRegistry.registerTechnique(fruitId, fastHealingBlessing);
         TechRegistry.registerTechnique(fruitId, blazingDash); // Register new technique
+        Plugin.registerFruitID(fruitId);
     }
 
     static Technique swiftAttack = new Technique("swift_attack", "Swift Attack", false, cooldownHelper.secondsToMiliseconds(300), (player, fruit, code) -> {
