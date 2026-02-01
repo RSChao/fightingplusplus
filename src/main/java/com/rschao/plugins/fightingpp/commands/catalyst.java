@@ -1,5 +1,7 @@
 package com.rschao.plugins.fightingpp.commands;
 
+import com.rschao.plugins.techniqueAPI.tech.register.TechRegistry;
+import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import org.bukkit.NamespacedKey;
 
 import com.rschao.plugins.fightingpp.items.fruits;
@@ -11,7 +13,7 @@ public class catalyst {
     public static CommandAPICommand Load(){
         CommandAPICommand cmd = new CommandAPICommand("catalyst")
         .withPermission("fruits.give")
-        .withArguments(new StringArgument("id"), new StringArgument("name"))
+        .withArguments(new StringArgument("id").replaceSuggestions(ArgumentSuggestions.strings(info -> TechRegistry.getRegisteredFruitIds().toArray(new String[0]))), new StringArgument("name"))
         .executesPlayer((exec, args) ->{
             String fruit = (String) args.get(0);
             String name = (String) args.get(1);
