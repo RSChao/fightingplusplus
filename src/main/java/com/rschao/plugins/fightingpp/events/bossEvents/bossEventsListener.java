@@ -1,6 +1,7 @@
 package com.rschao.plugins.fightingpp.events.bossEvents;
 
 import com.rschao.Plugin;
+import com.rschao.boss_battle.BossAPI;
 import com.rschao.events.definitions.BossChangeEvent;
 import com.rschao.events.definitions.BossEndEvent;
 import com.rschao.events.definitions.BossStartEvent;
@@ -25,11 +26,10 @@ public class bossEventsListener implements Listener {
 
     @EventHandler
     void onBossPhaseChangeEvent(BossChangeEvent ev) {
-        //get the boss name as the name of the config file, then load it and look for the value of key boss.world.x.soul (x being the phase number)
-        String bossName = ev.getBossName();
-        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(Bukkit.getPluginManager().getPlugin("bossfight").getDataFolder() + "/bosses/", bossName + ".yml"));
+        FileConfiguration config = ev.config;
+        isBossActive = true;
 
-        List<String> fruits = config.getStringList("boss.world." + ev.getPhase() + ".fruits");
+        List<String> fruits = BossAPI.getAddon(config, ev.getPhase(), "fruits");
         if (fruits.isEmpty()) return;
         File configFile = new File(events.path, "fruits.yml");
         FileConfiguration conf = YamlConfiguration.loadConfiguration(configFile);
@@ -46,22 +46,10 @@ public class bossEventsListener implements Listener {
             e.printStackTrace();
         }
         CooldownManager.removeAllCooldowns(ev.getBossPlayer());
-        //get the player who used the ultimate
-        //get the fruit id from the player
-        String fruitId = fruits.get(0);
-        //set the fruit to the player and awake it
-        events.saveFruitToConfig(playerName, fruitId);
-        awakening.setFruitAwakened(playerName, fruitId, true);
-        if (fruits.size() < 2) return;
-        fruitId = fruits.get(1);
-        events.saveFruitToConfig(playerName, fruitId);
-        awakening.setFruitAwakened(playerName, fruitId, true);
-    }
-
-    @EventHandler
-    void onBossStartEvent(BossStartEvent event) {
-        //Boss Start Event
-        //Can change fruits here
+        for(String fruitId : fruits){
+            com.rschao.plugins.fightingpp.events.events.saveFruitToConfig(playerName, fruitId);
+            com.rschao.plugins.fightingpp.events.awakening.setFruitAwakened(playerName, fruitId, true);
+        }
     }
 
     @EventHandler

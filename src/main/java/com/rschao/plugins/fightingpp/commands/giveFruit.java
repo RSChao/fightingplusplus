@@ -7,17 +7,17 @@ public class giveFruit {
     public static CommandAPICommand givefruit(){
         return new CommandAPICommand("givefruit")
         .withPermission("fruits.give")
-        .withSubcommands(fabri(), toño(), delta(), dario(), chao(), shadow(), luffy(), wakeup(), peru(), paper(), choco(), fly(), ticles(), jevil(), flowah(), ganon(), parrado(), aitor())
+        .withSubcommands(freeze(), fabri(), toño(), delta(), dario(), chao(), shadow(), luffy(), wakeup(), peru(), paper(), choco(), fly(), ticles(), jevil(), flowah(), ganon(), parrado(), aitor())
         .executes((exec, args) ->{
 
         });
 
     }
-    public static CommandAPICommand fire(){
-        CommandAPICommand cmd = new CommandAPICommand("MeraMera")
+    public static CommandAPICommand freeze(){
+        CommandAPICommand cmd = new CommandAPICommand("ToketuToketsu")
                 .withPermission("fruits.give")
                 .executesPlayer((exec, args) ->{
-                    exec.getInventory().addItem(fruits.fireFruit);
+                    exec.getInventory().addItem(fruits.FreezeFruit);
                 });
         return cmd;
     }

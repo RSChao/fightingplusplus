@@ -13,7 +13,7 @@ public class catalyst {
     public static CommandAPICommand Load(){
         CommandAPICommand cmd = new CommandAPICommand("catalyst")
         .withPermission("fruits.give")
-        .withArguments(new StringArgument("id").replaceSuggestions(ArgumentSuggestions.strings(info -> TechRegistry.getRegisteredFruitIds().toArray(new String[0]))), new StringArgument("name"))
+        .withArguments(new StringArgument("id"), new StringArgument("name"))
         .executesPlayer((exec, args) ->{
             String fruit = (String) args.get(0);
             String name = (String) args.get(1);

@@ -230,7 +230,7 @@ public class chao {
             if (ent.equals(p)) continue;
             if (!ent.getWorld().equals(world)) continue;
             if (ent.getLocation().distance(center) <= 100) {
-                if(!(ent instanceof LivingEntity)) continue;
+                if(!(ent instanceof Player)) continue;
                 if (ent instanceof ItemFrame) continue;
                 if (ent instanceof Painting) continue;
                 if (ent instanceof Minecart) continue;
@@ -283,7 +283,6 @@ public class chao {
                     for (Entity ent : nearbyEntities) {
                         Location loc = ent.getLocation();
                         p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 20 * 5, 255)); // resistance for 5 seconds
-                        world.createExplosion(loc, 100.0F, true, true, p); // very powerful explosion
                         if(ent instanceof Player p){
 
                             p.damage(1000.0, player);
@@ -295,6 +294,7 @@ public class chao {
                                 }, 2);
                             }
                         }
+                        world.createExplosion(loc, 100.0F, false, true, p); // very powerful explosion
                     }
                 }
             }

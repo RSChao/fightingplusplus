@@ -2,6 +2,8 @@ package com.rschao.plugins.fightingpp.items;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -43,6 +45,7 @@ public class fruits {
     public static ItemStack parraFruit;
     public static ItemStack AitorFruit;
     public static ItemStack YoruFruit;
+    public static ItemStack FreezeFruit;
     public static ItemStack thegenothing;
     public static ItemStack fruitStealer;
     public static ItemStack fruitRemover;
@@ -67,9 +70,14 @@ public class fruits {
         parraFruit = DevilFruit.makeFruit("Parrado Parrado", new NamespacedKey("fruit", "parrado"), 69);
         AitorFruit = DevilFruit.makeFruit("Aítor Aítor", new NamespacedKey("fruit", "aitor"), 69);
         YoruFruit = DevilFruit.makeFruit("Yoru Kami", new NamespacedKey("fruit", "shadow"), 61);
-        thegenothing = geno();
+        FreezeFruit = DevilFruit.makeFruit("Toketsu Toketsu", new NamespacedKey("fruit", "freeze"), 2);
         fruitRemover = removerItem();
 
+        addRecipes();
+    }
+
+
+    static void addRecipes(){
         ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey("fruit", "stealer"), fruitStealer);
         recipe.shape("BAB", "ACA", "BAB");
         recipe.setIngredient('A', new ExactChoice(getAllExistingFruits()));
@@ -83,38 +91,45 @@ public class fruits {
         Bukkit.addRecipe(sr);
     }
     public static List<ItemStack> getAllFruits() {
-        List<ItemStack> list = new ArrayList<>();
-        list.add(fabriFruit);
-        list.add(deltaFrutita);
-        list.add(darioFruit);
-        list.add(chaoFruit);
-        list.add(luffyFruit);
-        list.add(peruFruit);
-        list.add(paperFruit);
-        list.add(chocoFruit);
-        list.add(flyFruit);
-        list.add(toñoFruit);
-        list.add(flowerFruit);
-        list.add(ganonFruit);
-        list.add(jevilFruit);
-        list.add(parraFruit);
-        list.add(AitorFruit);
-        return list;
+
+            return java.util.Arrays.asList(
+                    fabriFruit,
+                    deltaFrutita,
+                    darioFruit,
+                    chaoFruit,
+                    luffyFruit,
+                    peruFruit,
+                    paperFruit,
+                    chocoFruit,
+                    flyFruit,
+                    toñoFruit,
+                    flowerFruit,
+                    ganonFruit,
+                    jevilFruit,
+                    parraFruit,
+                    AitorFruit,
+                    iceFruit).stream().filter(Objects::nonNull).collect(Collectors.toList());
+
     }
     public static List<String> getAllKamiFruits(){
         List<String> list = new ArrayList<>();
-        list.add(chaoFruit.getItemMeta().getPersistentDataContainer().getKeys().stream().findFirst().get().getKey());
-        //list.add(paperFruit.getItemMeta().getPersistentDataContainer().getKeys().stream().findFirst().get().getKey());
-        list.add(YoruFruit.getItemMeta().getPersistentDataContainer().getKeys().stream().findFirst().get().getKey());
+        if (chaoFruit != null && chaoFruit.getItemMeta() != null) {
+            chaoFruit.getItemMeta().getPersistentDataContainer().getKeys()
+                    .stream().findFirst().ifPresent(k -> list.add(k.getKey()));
+        }
+        if (YoruFruit != null && YoruFruit.getItemMeta() != null) {
+            YoruFruit.getItemMeta().getPersistentDataContainer().getKeys()
+                    .stream().findFirst().ifPresent(k -> list.add(k.getKey()));
+        }
         return list;
     }
     public static List<ItemStack> getAllExistingFruits() {
-        List<ItemStack> list = getAllFruits();
-        list.add(tickleFruit);
-        //list.add(dndFruit);
-        list.add(YoruFruit);
-    
-        return list;
+        List<ItemStack> list = new ArrayList<>(getAllFruits());
+        if (tickleFruit != null) list.add(tickleFruit);
+        if (YoruFruit != null) list.add(YoruFruit);
+        // Si hay más frutas opcionales, comprobaciones similares
+        // Asegurarse de no añadir nulls
+        return list.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
     
     

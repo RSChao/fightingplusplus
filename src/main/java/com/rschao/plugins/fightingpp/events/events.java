@@ -1,5 +1,6 @@
 package com.rschao.plugins.fightingpp.events;
 
+import com.rschao.items.Items;
 import com.rschao.items.weapons;
 import com.rschao.plugins.fightingpp.Plugin;
 import com.rschao.plugins.fightingpp.api.DevilFruit;
@@ -12,6 +13,7 @@ import com.rschao.plugins.techniqueAPI.tech.context.TechniqueContext;
 import com.rschao.plugins.techniqueAPI.tech.cooldown.CooldownManager;
 import com.rschao.plugins.techniqueAPI.tech.feedback.hotbarMessage;
 import com.rschao.plugins.techniqueAPI.tech.register.TechRegistry;
+import com.rschao.plugins.techniqueAPI.tech.register.TechniqueNameManager;
 import com.rschao.plugins.techniqueAPI.tech.util.PlayerTechniqueManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -19,7 +21,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,6 +41,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.loot.LootTables;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,10 +51,11 @@ import java.util.*;
 
 public class events implements Listener {
     public static Map<String, Integer> playerTechniques = new HashMap<>();
-    public static Map<UUID, Map<String, Long>> cooldowns = new HashMap<>();
     public static final String path = Plugin.getPlugin(Plugin.class).getDataFolder().getAbsolutePath();
-    public static final Map<UUID, Integer> playerGroupIdIndex = new HashMap<>();
     public static Map<String, Boolean> hasAntiGeno = new HashMap<>();
+    public static Map<String, Boolean> hasIce = new HashMap<>();
+    public static Map<String, Boolean> isStasis = new HashMap<>();
+    public static Map<String, Vector> StasisVector = new HashMap<>();
 
     // Nueva bandera para permitir múltiples fruitIDs por catalizador
     public static boolean allowMultipleFruitIDsPerCatalyst = false;
@@ -241,6 +249,7 @@ public class events implements Listener {
                         player.sendMessage(ChatColor.GREEN + "Your " + fruitId + " fruit has been removed and returned to you!");
                     }
                 }
+                if(awakenedAny) player.getWorld().dropItemNaturally(player.getLocation(), fruits.awaken);
                 File configFile = new File(path, "fruits.yml");
                 FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
                 // remove tech usage count
@@ -335,8 +344,7 @@ public class events implements Listener {
         }
         int techIndex = PlayerTechniqueManager.getCurrentTechnique(player.getUniqueId(), fruitId);
         if (e.getAction().toString().contains("LEFT")) {
-            Technique technique = null;
-            technique = TechRegistry.getAllTechniques(fruitId).get(techIndex);
+            Technique technique = TechRegistry.getAllTechniques(fruitId).get(techIndex);
 
             if (technique == null) return;
             if (technique.getMeta().isUltimate() && awakening.isFruitAwakened(player.getName(), fruitId)) {
@@ -369,7 +377,7 @@ public class events implements Listener {
                 PlayerTechniqueManager.setCurrentTechnique(player.getUniqueId(), fruitId, (techIndex + 1) % TechRegistry.getAllTechniques(fruitId).size());
             }
             techIndex = PlayerTechniqueManager.getCurrentTechnique(player.getUniqueId(), fruitId);
-            player.sendMessage(ChatColor.GREEN + "Switched to technique: " + TechRegistry.getAllTechniques(fruitId).get(techIndex).getDisplayName());
+            player.sendMessage(ChatColor.GREEN + "Switched to technique: " + TechniqueNameManager.getDisplayName(player, TechRegistry.getAllTechniques(fruitId).get(techIndex)));
         }
 
     }
@@ -424,15 +432,40 @@ public class events implements Listener {
 
     @EventHandler
     void onGeno(EntityDamageByEntityEvent ev) {
-        if(!(ev.getDamager() instanceof Player)) return;
-        Player player = (Player) ev.getDamager();
-        if(!(ev.getEntity() instanceof Player)) return;
-        Player damaged = (Player) ev.getEntity();
-        if(!hasAntiGeno.get(damaged.getName())) return;
-        if(ev.getDamage() < 700) return;
-        ev.setCancelled(true);
-        hasAntiGeno.put(damaged.getName(), false);
-        damaged.sendMessage(ChatColor.GREEN + "Your anti-geno shield has absorbed the attack!");
+        if(!(ev.getDamager() instanceof Player player)) return;
+        if(hasIce.getOrDefault(player.getName(), false)) {
+            Entity victim = ev.getEntity();
+            if(victim instanceof LivingEntity le){
+                ev.setDamage(ev.getDamage() * 1.25);
+                player.sendMessage("Your ice amplifies the damage!");
+                le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 4));
+            }
+        }
+        if(!(ev.getEntity() instanceof Player damaged)) return;
+        if(hasAntiGeno.getOrDefault(damaged.getName(), false)) {
+            if(ev.getDamage() < 700) return;
+            ev.setCancelled(true);
+            hasAntiGeno.put(damaged.getName(), false);
+            damaged.sendMessage(ChatColor.GREEN + "Your anti-geno shield has absorbed the attack!");
+        }
+        if(isStasis.getOrDefault(damaged.getName(), false)) {
+            Vector v = StasisVector.getOrDefault(damaged.getName(), null);
+            if(v == null) v = new Vector(0,0,0);
+            ItemStack sword = player.getInventory().getItemInMainHand();
+            if(!sword.hasItemMeta()) return;
+            double kb = sword.getEnchantmentLevel(Enchantment.KNOCKBACK);
+            v.add((player.getLocation().getDirection().normalize().multiply(0.5 + 0.1 * kb)));
+            StasisVector.put(damaged.getName(), v);
+            damaged.setVelocity(new Vector(0, 0, 0));
+        }
+    }
+    @EventHandler
+    void onPlayerMove(org.bukkit.event.player.PlayerMoveEvent ev){
+        Player player = ev.getPlayer();
+        if(isStasis.getOrDefault(player.getName(), false)){
+            ev.setCancelled(true);
+            player.sendMessage("You are in stasis and cannot move!");
+        }
     }
 
 

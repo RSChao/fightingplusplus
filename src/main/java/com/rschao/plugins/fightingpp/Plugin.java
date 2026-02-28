@@ -88,6 +88,7 @@ public class Plugin extends JavaPlugin {
         Parrado.Register();
         Aitor.Register();
         YoruKami.register();
+        freeze.registerTechs();
         // Add more tech registrations as needed
     }
     public static List<String> getAllFruitIDs(){
