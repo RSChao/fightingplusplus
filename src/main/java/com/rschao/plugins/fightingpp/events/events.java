@@ -1,13 +1,9 @@
 package com.rschao.plugins.fightingpp.events;
 
-import com.rschao.items.Items;
-import com.rschao.items.weapons;
 import com.rschao.plugins.fightingpp.Plugin;
 import com.rschao.plugins.fightingpp.api.DevilFruit;
 import com.rschao.plugins.fightingpp.events.definitions.PlayerUseUltimate;
 import com.rschao.plugins.fightingpp.items.fruits;
-import com.rschao.plugins.fightingpp.techs.Seirei;
-import com.rschao.plugins.fightingpp.techs.chao;
 import com.rschao.plugins.showdowncore.showdownCore.api.runnables.ShowdownScript;
 import com.rschao.plugins.showdowncore.showdownCore.api.runnables.registry.ScriptRegistry;
 import com.rschao.plugins.techniqueAPI.tech.Technique;
@@ -30,7 +26,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
