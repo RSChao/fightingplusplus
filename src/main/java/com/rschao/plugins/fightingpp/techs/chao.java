@@ -528,8 +528,8 @@ public class chao {
             hotbarMessage.sendHotbarMessage(player, ChatColor.RED + "¡Debes tener ambos frutos despertados para usar esta técnica!");
             return false;
         }
-        events.DeawakenFruit(player, fruitId);
         events.DeawakenFruit(player, "fly");
+        events.DeawakenFruit(player, "chao");
         return true;
     });
 
