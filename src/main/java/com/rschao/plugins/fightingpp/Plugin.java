@@ -55,10 +55,7 @@ public class Plugin extends JavaPlugin {
         removeFruit.deleteFruit().register();
         catalyst.Load().register();
         eventitems.Load().register();
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist off");
-            com.rschao.Plugin.EnableCHeart();
-        });
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, com.rschao.Plugin::EnableCHeart);
     }
     public static EffectManager getEffectManager() {
         return effectManager;

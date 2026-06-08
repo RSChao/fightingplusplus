@@ -108,7 +108,7 @@ public class fruits {
                     jevilFruit,
                     parraFruit,
                     AitorFruit,
-                    iceFruit).stream().filter(Objects::nonNull).collect(Collectors.toList());
+                    FreezeFruit).stream().filter(Objects::nonNull).collect(Collectors.toList());
 
     }
     public static List<String> getAllKamiFruits(){
@@ -119,6 +119,22 @@ public class fruits {
         }
         if (YoruFruit != null && YoruFruit.getItemMeta() != null) {
             YoruFruit.getItemMeta().getPersistentDataContainer().getKeys()
+                    .stream().findFirst().ifPresent(k -> list.add(k.getKey()));
+        }
+        return list;
+    }
+    public static List<String> getAllSacredFruits(){
+        List<String> list = new ArrayList<>();
+        if (deltaFrutita != null && deltaFrutita.getItemMeta() != null) {
+            deltaFrutita.getItemMeta().getPersistentDataContainer().getKeys()
+                    .stream().findFirst().ifPresent(k -> list.add(k.getKey()));
+        }
+        if (flowerFruit != null && flowerFruit.getItemMeta() != null) {
+            flowerFruit.getItemMeta().getPersistentDataContainer().getKeys()
+                    .stream().findFirst().ifPresent(k -> list.add(k.getKey()));
+        }
+        if (flyFruit != null && flyFruit.getItemMeta() != null) {
+            flyFruit.getItemMeta().getPersistentDataContainer().getKeys()
                     .stream().findFirst().ifPresent(k -> list.add(k.getKey()));
         }
         return list;
@@ -155,18 +171,6 @@ public class fruits {
         meta.setItemName("Devil Fruit Awakener");
         meta.setEnchantmentGlintOverride(true);
         meta.getPersistentDataContainer().set(new NamespacedKey("fruit", "awaken"), PersistentDataType.BOOLEAN, true);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    static ItemStack geno(){
-        ItemStack item = new ItemStack(Material.NETHERITE_SWORD);
-        ItemMeta meta = item.getItemMeta();
-        meta.setRarity(ItemRarity.EPIC);
-        meta.setItemName(ChatColor.DARK_RED + "Genocidal knife");
-        meta.setEnchantmentGlintOverride(true);
-        meta.setItemModel(NamespacedKey.minecraft("geno_knife"));
-        meta.getPersistentDataContainer().set(new NamespacedKey("event", "geno"), PersistentDataType.BOOLEAN, true);
         item.setItemMeta(meta);
         return item;
     }

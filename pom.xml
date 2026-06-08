@@ -65,7 +65,6 @@
             <version>10.10</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>com.rschao.plugins.showdowncore</groupId>
             <artifactId>showdowncore</artifactId>

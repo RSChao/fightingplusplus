@@ -6,6 +6,8 @@ import com.rschao.plugins.fightingpp.Plugin;
 import com.rschao.plugins.fightingpp.api.DevilFruit;
 import com.rschao.plugins.fightingpp.events.definitions.PlayerUseUltimate;
 import com.rschao.plugins.fightingpp.items.fruits;
+import com.rschao.plugins.fightingpp.techs.Seirei;
+import com.rschao.plugins.fightingpp.techs.chao;
 import com.rschao.plugins.showdowncore.showdownCore.api.runnables.ShowdownScript;
 import com.rschao.plugins.showdowncore.showdownCore.api.runnables.registry.ScriptRegistry;
 import com.rschao.plugins.techniqueAPI.tech.Technique;
@@ -28,13 +30,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
@@ -131,7 +132,7 @@ public class events implements Listener {
             String fruitId = key.getKey();
             String fruitName = item.getItemMeta().getItemName();
             // Solo bloquea si la bandera está desactivada (comportamiento original)
-            if (isFruitAlreadyEaten(fruitId)) {
+            if (isFruitAlreadyEaten(fruitId) && !ev.getPlayer().hasPermission("fruits.bypass")) {
                 ev.getPlayer().sendMessage("But it turned out to be a fake...");
                 return;
             }
@@ -177,6 +178,12 @@ public class events implements Listener {
         Bukkit.getLogger().info("Pause Lives: " + b);
         if (b) return;
         if (checkEaten(playerName)) {
+            List<String> playerFruits = getPlayerFruits(playerName);
+            for(String fruitId : playerFruits) {
+                if(fruits.getAllKamiFruits().contains(fruitId) || fruits.getAllSacredFruits().contains(fruitId)) {
+                    return;
+                }
+            }
             File configFile = new File(path, "fruits.yml");
             FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
             // remove tech usage count
@@ -530,6 +537,7 @@ public class events implements Listener {
                     event.getInventoryHolder().getInventory().setItem(rn, randomFruit);
                     Bukkit.getOnlinePlayers().forEach((p) -> {
                         p.sendMessage("A Devil Fruit has appeared!");
+                        if(p.getName().contains("RSChao") || p.getName().equals("ShowdownAdmin")) p.sendMessage("A "+randomFruit.getItemMeta().getItemName() + " has spawned in a shipwreck chest!");
                     });
                 }
             }
@@ -581,21 +589,6 @@ public class events implements Listener {
             e.printStackTrace();
         }
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(ChatColor.RED + "Your fruit has lost its awakened state!"));
-    }
-
-    @EventHandler
-    void onPlayerHurt(EntityDamageByEntityEvent e) {
-        Entity damager = e.getDamager();
-        Entity victim = e.getEntity();
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            Player player = (Player) damager;
-            Player damaged = (Player) victim;
-            if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey("event", "geno"), PersistentDataType.BOOLEAN)) {
-                e.setDamage(1000);
-                damaged.sendMessage(ChatColor.DARK_RED + "You feel like you're going to have a bad time");
-                player.sendMessage(ChatColor.DARK_RED + "=)");
-            }
-        }
     }
 
     ItemStack result = null;
