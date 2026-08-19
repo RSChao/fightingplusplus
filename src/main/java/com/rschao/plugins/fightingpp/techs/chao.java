@@ -112,8 +112,7 @@ public class chao {
         }
 
         for (ItemStack item : armorContents) {
-            if (item != null && item.getItemMeta() instanceof Damageable && item.getDurability() < item.getType().getMaxDurability()) {
-                Damageable meta = (Damageable) item.getItemMeta();
+            if (item != null && item.getItemMeta() instanceof Damageable meta && item.getDurability() < item.getType().getMaxDurability()) {
                 meta.setDamage(0); // Set durability to maximum
                 item.setItemMeta(meta);
             }
