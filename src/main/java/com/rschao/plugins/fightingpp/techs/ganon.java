@@ -25,12 +25,12 @@ public class ganon {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void register() {
-        TechRegistry.registerTechnique(id, test);
-        TechRegistry.registerTechnique(id, kick);
-        TechRegistry.registerTechnique(id, grab);
-        TechRegistry.registerTechnique(id, punch);
-        TechRegistry.registerTechnique(id, rush);
-        TechRegistry.registerTechnique(id, ultimateCombo);
+        Plugin.getRegistry().registerTechnique(id, test);
+        Plugin.getRegistry().registerTechnique(id, kick);
+        Plugin.getRegistry().registerTechnique(id, grab);
+        Plugin.getRegistry().registerTechnique(id, punch);
+        Plugin.getRegistry().registerTechnique(id, rush);
+        Plugin.getRegistry().registerTechnique(id, ultimateCombo);
         Plugin.registerFruitID(id);
     }
 

@@ -29,11 +29,11 @@ public class peru {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, lilPoisonDarts);
-        TechRegistry.registerTechnique(fruitId, annoyingGlitch);
-        TechRegistry.registerTechnique(fruitId, jumpGoBig);
-        TechRegistry.registerTechnique(fruitId, dontBlowMeUp);
-        TechRegistry.registerTechnique(fruitId, ultimateGlitch);
+        Plugin.getRegistry().registerTechnique(fruitId, lilPoisonDarts);
+        Plugin.getRegistry().registerTechnique(fruitId, annoyingGlitch);
+        Plugin.getRegistry().registerTechnique(fruitId, jumpGoBig);
+        Plugin.getRegistry().registerTechnique(fruitId, dontBlowMeUp);
+        Plugin.getRegistry().registerTechnique(fruitId, ultimateGlitch);
         Plugin.registerFruitID(fruitId);
     }
 

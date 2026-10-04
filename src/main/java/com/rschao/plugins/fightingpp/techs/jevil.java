@@ -28,11 +28,11 @@ public class jevil {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void register() {
-        TechRegistry.registerTechnique(ID, spade);
-        TechRegistry.registerTechnique(ID, heartbarrier);
-        TechRegistry.registerTechnique(ID, diamondchain);
-        TechRegistry.registerTechnique(ID, shuffle);
-        TechRegistry.registerTechnique(ID, laugh);
+        Plugin.getRegistry().registerTechnique(ID, spade);
+        Plugin.getRegistry().registerTechnique(ID, heartbarrier);
+        Plugin.getRegistry().registerTechnique(ID, diamondchain);
+        Plugin.getRegistry().registerTechnique(ID, shuffle);
+        Plugin.getRegistry().registerTechnique(ID, laugh);
         Plugin.registerFruitID(ID);
     }
 

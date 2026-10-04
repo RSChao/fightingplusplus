@@ -26,11 +26,11 @@ public class choco {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, makeMeSomeChoco);
-        TechRegistry.registerTechnique(fruitId, chocoChocoNotMe);
-        TechRegistry.registerTechnique(fruitId, sweetArmor);
-        TechRegistry.registerTechnique(fruitId, aceOfChocolate);
-        TechRegistry.registerTechnique(fruitId, chocolateCircus);
+        Plugin.getRegistry().registerTechnique(fruitId, makeMeSomeChoco);
+        Plugin.getRegistry().registerTechnique(fruitId, chocoChocoNotMe);
+        Plugin.getRegistry().registerTechnique(fruitId, sweetArmor);
+        Plugin.getRegistry().registerTechnique(fruitId, aceOfChocolate);
+        Plugin.getRegistry().registerTechnique(fruitId, chocolateCircus);
         Plugin.registerFruitID(fruitId);
     }
 

@@ -18,7 +18,7 @@ public class gomu {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, gomuNoMi);
+        Plugin.getRegistry().registerTechnique(fruitId, gomuNoMi);
         Plugin.registerFruitID(fruitId);
     }
 

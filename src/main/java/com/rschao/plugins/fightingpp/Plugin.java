@@ -6,6 +6,9 @@ import com.rschao.plugins.fightingpp.events.debuffEvent;
 import com.rschao.plugins.fightingpp.events.events;
 import com.rschao.plugins.fightingpp.items.fruits;
 import com.rschao.plugins.fightingpp.techs.*;
+import com.rschao.plugins.techniqueAPI.tech.register.SubRegistryBuilder;
+import com.rschao.plugins.techniqueAPI.tech.register.TechRegistry;
+import com.rschao.plugins.techniqueAPI.tech.register.TechniqueSubRegistry;
 import de.slikey.effectlib.EffectManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -27,10 +30,13 @@ public class Plugin extends JavaPlugin {
     private static final List<String> abyssIds = new ArrayList<>();
     static EffectManager effectManager;
 
+    private static TechniqueSubRegistry registry;
+
     public void onEnable() {
         effectManager = new EffectManager(this);
         LOGGER.info("fightingplusplus enabled");
         fruits.Init();
+        registry = new SubRegistryBuilder("fruits").setConfigFilePath(Plugin.getPlugin(Plugin.class).getDataFolder().getAbsolutePath() + "/fruits.yml").setGroupIDGetter(player -> events.getPlayerFruits(player.getName())).build();
         registerTechs();
         Bukkit.getPluginManager().registerEvents(new Listener() {
             @EventHandler
@@ -95,5 +101,9 @@ public class Plugin extends JavaPlugin {
         if(!abyssIds.contains(id)){
             abyssIds.add(id);
         }
+    }
+
+    public static TechniqueSubRegistry getRegistry() {
+        return registry;
     }
 }

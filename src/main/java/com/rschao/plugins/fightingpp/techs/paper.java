@@ -26,11 +26,11 @@ public class paper {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, paperSpawn);
-        TechRegistry.registerTechnique(fruitId, healWithPaper);
-        TechRegistry.registerTechnique(fruitId, paperArmor);
-        TechRegistry.registerTechnique(fruitId, paperBlade);
-        TechRegistry.registerTechnique(fruitId, mayhemOfPaper);
+        Plugin.getRegistry().registerTechnique(fruitId, paperSpawn);
+        Plugin.getRegistry().registerTechnique(fruitId, healWithPaper);
+        Plugin.getRegistry().registerTechnique(fruitId, paperArmor);
+        Plugin.getRegistry().registerTechnique(fruitId, paperBlade);
+        Plugin.getRegistry().registerTechnique(fruitId, mayhemOfPaper);
         Plugin.registerFruitID(fruitId);
     }
 

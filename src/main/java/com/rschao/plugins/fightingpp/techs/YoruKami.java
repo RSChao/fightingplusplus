@@ -33,17 +33,17 @@ public class YoruKami {
     static final String fruitId = "shadow";
     public static void register(){
         Plugin.registerFruitID(fruitId);
-        TechRegistry.registerTechnique(fruitId, shadowDash);
-        TechRegistry.registerTechnique(fruitId, soulless);
-        TechRegistry.registerTechnique(fruitId, shadowAbyss);
-        TechRegistry.registerTechnique(fruitId, shadowWalk);
-        TechRegistry.registerTechnique(fruitId, shadowWorld);
-        TechRegistry.registerTechnique(fruitId, shadowStrikes);
-        TechRegistry.registerTechnique(fruitId, shadowBleed);
-        TechRegistry.registerTechnique(fruitId, shadowKick);
-        TechRegistry.registerTechnique(fruitId, shadowPunch);
-        TechRegistry.registerTechnique(fruitId, omegaBlast);
-        TechRegistry.registerTechnique(fruitId, shadowMassacre);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowDash);
+        Plugin.getRegistry().registerTechnique(fruitId, soulless);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowAbyss);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowWalk);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowWorld);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowStrikes);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowBleed);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowKick);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowPunch);
+        Plugin.getRegistry().registerTechnique(fruitId, omegaBlast);
+        Plugin.getRegistry().registerTechnique(fruitId, shadowMassacre);
     }
 
     static Technique shadowDash = new Technique("shadow_dash","Shadow Dash",new TechniqueMeta(false, cooldownHelper.minutesToMiliseconds(7), List.of("Proporciona un pequeño salto", "Daña a un jugador cercano")), TargetSelectors.self(),(ctx, token)->{

@@ -29,14 +29,14 @@ public class flower {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void register() {
-        TechRegistry.registerTechnique(ID, blizzard);
-        TechRegistry.registerTechnique(ID, florafade);
-        TechRegistry.registerTechnique(ID, berryburst);
-        TechRegistry.registerTechnique(ID, mandragorasbreath);
-        TechRegistry.registerTechnique(ID, pentaflare);
-        TechRegistry.registerTechnique(ID, buff);
-        TechRegistry.registerTechnique(ID, judge);
-        TechRegistry.registerTechnique(ID, combo);
+        Plugin.getRegistry().registerTechnique(ID, blizzard);
+        Plugin.getRegistry().registerTechnique(ID, florafade);
+        Plugin.getRegistry().registerTechnique(ID, berryburst);
+        Plugin.getRegistry().registerTechnique(ID, mandragorasbreath);
+        Plugin.getRegistry().registerTechnique(ID, pentaflare);
+        Plugin.getRegistry().registerTechnique(ID, buff);
+        Plugin.getRegistry().registerTechnique(ID, judge);
+        Plugin.getRegistry().registerTechnique(ID, combo);
         Plugin.registerFruitID(ID);
     }
 

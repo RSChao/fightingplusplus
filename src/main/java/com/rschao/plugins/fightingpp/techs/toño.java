@@ -26,7 +26,7 @@ public class toño {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void register() {
-        TechRegistry.registerTechnique(FRUIT_ID, lewis);
+        Plugin.getRegistry().registerTechnique(FRUIT_ID, lewis);
         Plugin.registerFruitID(FRUIT_ID);
     }
 

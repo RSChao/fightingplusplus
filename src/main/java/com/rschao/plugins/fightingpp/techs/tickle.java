@@ -26,7 +26,7 @@ public class tickle {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, tickleSpawner);
+        Plugin.getRegistry().registerTechnique(fruitId, tickleSpawner);
         Plugin.registerFruitID(fruitId);
     }
 

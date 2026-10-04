@@ -40,15 +40,15 @@ public class chao {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, food);
-        TechRegistry.registerTechnique(fruitId, pearl);
-        TechRegistry.registerTechnique(fruitId, armor);
-        TechRegistry.registerTechnique(fruitId, tp);
-        TechRegistry.registerTechnique(fruitId, feast);
-        TechRegistry.registerTechnique(fruitId, purify);
-        TechRegistry.registerTechnique(fruitId, spiral);
-        TechRegistry.registerTechnique(fruitId, slashes);
-        TechRegistry.registerTechnique(fruitId, soulstorm);
+        Plugin.getRegistry().registerTechnique(fruitId, food);
+        Plugin.getRegistry().registerTechnique(fruitId, pearl);
+        Plugin.getRegistry().registerTechnique(fruitId, armor);
+        Plugin.getRegistry().registerTechnique(fruitId, tp);
+        Plugin.getRegistry().registerTechnique(fruitId, feast);
+        Plugin.getRegistry().registerTechnique(fruitId, purify);
+        Plugin.getRegistry().registerTechnique(fruitId, spiral);
+        Plugin.getRegistry().registerTechnique(fruitId, slashes);
+        Plugin.getRegistry().registerTechnique(fruitId, soulstorm);
         Plugin.registerFruitID(fruitId);
     }
 

@@ -27,11 +27,11 @@ public class fabri {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, freePearl);
-        TechRegistry.registerTechnique(fruitId, infiniteCrystals);
-        TechRegistry.registerTechnique(fruitId, obsidianFarm);
-        TechRegistry.registerTechnique(fruitId, armorHaki);
-        TechRegistry.registerTechnique(fruitId, immolation);
+        Plugin.getRegistry().registerTechnique(fruitId, freePearl);
+        Plugin.getRegistry().registerTechnique(fruitId, infiniteCrystals);
+        Plugin.getRegistry().registerTechnique(fruitId, obsidianFarm);
+        Plugin.getRegistry().registerTechnique(fruitId, armorHaki);
+        Plugin.getRegistry().registerTechnique(fruitId, immolation);
         Plugin.registerFruitID(fruitId);
     }
 

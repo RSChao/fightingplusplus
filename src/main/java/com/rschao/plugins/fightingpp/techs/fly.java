@@ -29,13 +29,13 @@ public class fly {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, flyMeToTheMoon);
-        TechRegistry.registerTechnique(fruitId, tailwind);
-        TechRegistry.registerTechnique(fruitId, flyingLittleBugs);
-        TechRegistry.registerTechnique(fruitId, featherFall);
-        TechRegistry.registerTechnique(fruitId, ambush);
-        TechRegistry.registerTechnique(fruitId, danceInTheStars);
-        TechRegistry.registerTechnique(fruitId, ultimateCombo);
+        Plugin.getRegistry().registerTechnique(fruitId, flyMeToTheMoon);
+        Plugin.getRegistry().registerTechnique(fruitId, tailwind);
+        Plugin.getRegistry().registerTechnique(fruitId, flyingLittleBugs);
+        Plugin.getRegistry().registerTechnique(fruitId, featherFall);
+        Plugin.getRegistry().registerTechnique(fruitId, ambush);
+        Plugin.getRegistry().registerTechnique(fruitId, danceInTheStars);
+        Plugin.getRegistry().registerTechnique(fruitId, ultimateCombo);
         Plugin.registerFruitID(fruitId);
     }
 

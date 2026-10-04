@@ -39,14 +39,14 @@ public class delta {
 
     public static void Register() {
         Plugin.registerFruitID(fruitId);
-        TechRegistry.registerTechnique(fruitId, windSword);
-        TechRegistry.registerTechnique(fruitId, negate);
-        TechRegistry.registerTechnique(fruitId, dragonOnslaught);
-        TechRegistry.registerTechnique(fruitId, armorHaki);
-        TechRegistry.registerTechnique(fruitId, conquerorsHaki);
-        TechRegistry.registerTechnique(fruitId, zoltraakBarrage);
-        TechRegistry.registerTechnique(fruitId, wrathOfElementalGod);
-        TechRegistry.registerTechnique(fruitId, tornado);
+        Plugin.getRegistry().registerTechnique(fruitId, windSword);
+        Plugin.getRegistry().registerTechnique(fruitId, negate);
+        Plugin.getRegistry().registerTechnique(fruitId, dragonOnslaught);
+        Plugin.getRegistry().registerTechnique(fruitId, armorHaki);
+        Plugin.getRegistry().registerTechnique(fruitId, conquerorsHaki);
+        Plugin.getRegistry().registerTechnique(fruitId, zoltraakBarrage);
+        Plugin.getRegistry().registerTechnique(fruitId, wrathOfElementalGod);
+        Plugin.getRegistry().registerTechnique(fruitId, tornado);
     }
 
     static Technique windSword = new Technique(

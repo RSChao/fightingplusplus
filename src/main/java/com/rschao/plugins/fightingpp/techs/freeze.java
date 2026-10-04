@@ -26,12 +26,12 @@ public class freeze {
     static final String fruitId = "freeze";
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
     public static void registerTechs() {
-        TechRegistry.registerTechnique(fruitId, blizzard);
-        TechRegistry.registerTechnique(fruitId, ice_wall);
-        TechRegistry.registerTechnique(fruitId, ice_blade);
-        TechRegistry.registerTechnique(fruitId, frost_grip);
-        TechRegistry.registerTechnique(fruitId, ice_glide);
-        TechRegistry.registerTechnique(fruitId, world_of_ice);
+        Plugin.getRegistry().registerTechnique(fruitId, blizzard);
+        Plugin.getRegistry().registerTechnique(fruitId, ice_wall);
+        Plugin.getRegistry().registerTechnique(fruitId, ice_blade);
+        Plugin.getRegistry().registerTechnique(fruitId, frost_grip);
+        Plugin.getRegistry().registerTechnique(fruitId, ice_glide);
+        Plugin.getRegistry().registerTechnique(fruitId, world_of_ice);
     }
 
     static Technique blizzard = new Technique(

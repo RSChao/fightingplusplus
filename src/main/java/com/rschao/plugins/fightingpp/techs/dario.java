@@ -28,10 +28,10 @@ public class dario {
     static final Plugin plugin = Plugin.getPlugin(Plugin.class);
 
     public static void Register() {
-        TechRegistry.registerTechnique(fruitId, swiftAttack);
-        TechRegistry.registerTechnique(fruitId, luckySpeed);
-        TechRegistry.registerTechnique(fruitId, fastHealingBlessing);
-        TechRegistry.registerTechnique(fruitId, blazingDash); // Register new technique
+        Plugin.getRegistry().registerTechnique(fruitId, swiftAttack);
+        Plugin.getRegistry().registerTechnique(fruitId, luckySpeed);
+        Plugin.getRegistry().registerTechnique(fruitId, fastHealingBlessing);
+        Plugin.getRegistry().registerTechnique(fruitId, blazingDash); // Register new technique
         Plugin.registerFruitID(fruitId);
     }
 

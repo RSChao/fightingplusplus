@@ -28,7 +28,7 @@ public class Parrado {
     public static void Register() {
 
         Plugin.registerFruitID(fruitId);
-        TechRegistry.registerTechnique(fruitId, parradoSpiral);
+        Plugin.getRegistry().registerTechnique(fruitId, parradoSpiral);
     }
 
     static Technique parradoSpiral = new Technique(

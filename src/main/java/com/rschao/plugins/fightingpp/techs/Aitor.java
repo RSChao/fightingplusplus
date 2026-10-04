@@ -27,7 +27,7 @@ public class Aitor {
 
     public static void Register() {
         Plugin.registerFruitID(fruitId);
-        TechRegistry.registerTechnique(fruitId, aitorTech);
+        Plugin.getRegistry().registerTechnique(fruitId, aitorTech);
     }
 
     static Technique aitorTech = new Technique(
